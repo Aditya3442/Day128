@@ -1,0 +1,31 @@
+class Solution {
+    public String repeatLimitedString(String s, int repeatLimit) {
+        int[] arr = new int[26];
+        for (char ch : s.toCharArray()) {
+            arr[ch - 'a']++;
+        }
+        StringBuilder sb = new StringBuilder();
+        int index = 25; 
+        while (index >= 0) {
+            if (arr[index] == 0) {
+                index--;
+                continue;
+            }
+            int x = Math.min(arr[index], repeatLimit);
+            for (int i = 0; i < x; i++) 
+                sb.append((char) ('a' + index));
+            arr[index] -= x;
+            if (arr[index] > 0) { 
+                int i = index - 1;
+                while (i >= 0 && arr[i] == 0) 
+                    i--;
+                if (i < 0) 
+                    break;
+                sb.append((char) ('a' + i));
+                arr[i]--;
+            }
+        }
+
+        return sb.toString();
+    }
+}
